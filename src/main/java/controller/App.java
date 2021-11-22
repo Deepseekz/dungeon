@@ -1,16 +1,14 @@
 package controller;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Player;
-import view.JavaFXView;
-import view.View;
+
+import java.awt.*;
 
 public class App extends Application {
     /*
@@ -30,19 +28,29 @@ public class App extends Application {
      *                     primary stages.
      * @throws Exception if something goes wrong
      */
+    Button playingButton;
+    Button scoreButton;
+    Button exitButton;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Group root = new Group();
-        JavaFXView view = new JavaFXView();
-        Text message = view.text;
-        root.getChildren().add(message);
-        root.getChildren().add(new Canvas(400,200));
-        Scene scene = new Scene(root);
-        Player player = new Player(view);
-        JavaFXController javaFXController = new JavaFXController(player);
-        scene.setOnKeyPressed(javaFXController.eventHandler);
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
+        // Create a new scene
+        primaryStage.setTitle("Dungeon Project");
+        BorderPane root = new BorderPane();
+        Scene mainScene = new Scene(root, 800, 600);
+        primaryStage.setScene(mainScene);
+
+        // Create a canvas to draw on
+        Canvas canvas = new Canvas(750, 550);
+        GraphicsContext context = canvas.getGraphicsContext2D();
+        root.setCenter(canvas);
+
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, 750, 550);
+
+        Play room = new Play(context);
+
+        primaryStage.show();
     }
 }
