@@ -1,14 +1,16 @@
 package controller;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import java.util.ArrayList;
 
 public class App extends Application {
     /*
@@ -28,9 +30,7 @@ public class App extends Application {
      *                     primary stages.
      * @throws Exception if something goes wrong
      */
-    Button playingButton;
-    Button scoreButton;
-    Button exitButton;
+    private GraphicsContext context;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -43,14 +43,46 @@ public class App extends Application {
 
         // Create a canvas to draw on
         Canvas canvas = new Canvas(750, 550);
-        GraphicsContext context = canvas.getGraphicsContext2D();
+        context = canvas.getGraphicsContext2D();
         root.setCenter(canvas);
 
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, 750, 550);
 
-        Play room = new Play(context);
-
         primaryStage.show();
+        ArrayList<String> inputs = new ArrayList<>();
+
+        mainScene.setOnKeyPressed(
+            (KeyEvent event) -> {
+                String code = event.getCode().toString();
+                if (!inputs.contains(code)) {
+                    inputs.add(code);
+                }
+            }
+        );
+        mainScene.setOnKeyReleased(
+            (KeyEvent event) -> {
+                String code = event.getCode().toString();
+                inputs.remove(code);
+            }
+        );
+
+        Player player = new Player(this.context);
+        Wall wall = new Wall(this.context);
+
+        AnimationTimer gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+                player.update(inputs, wall);
+
+                context.setFill(Color.BLACK);
+                context.fillRect(0, 0, 750, 550);
+                player.render(context);
+                wall.render(context);
+            }
+        };
+
+        gameLoop.start();
     }
 }

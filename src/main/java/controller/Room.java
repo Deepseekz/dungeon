@@ -4,9 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Room {
-    private int roomWidth;
-    private int roomHeight;
-    private GraphicsContext context;
+    private final int roomWidth;
+    private final int roomHeight;
+    private final GraphicsContext context;
     private Hitbox[] wallHitboxes;
 
     public Room(GraphicsContext context, int roomSize) {

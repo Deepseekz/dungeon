@@ -5,7 +5,34 @@ public class Vector {
     public double y;
 
     public Vector(double x, double y) {
+        this.set(x, y);
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void set(double x, double y) {
         this.x = x;
         this.y = y;
     }
+
+    public void add(double x, double y) {
+        this.x += x;
+        this.y += y;
+    }
+
+    public void add(Vector other) {
+        this.add(other.x, other.y);
+    }
+
+    public void multiply(double value) {
+        this.x *= value;
+        this.y *= value;
+    }
+
 }

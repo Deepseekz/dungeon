@@ -13,7 +13,7 @@ public class Hitbox {
         this.hitboxHeight = height;
     }
 
-    public boolean overlaps(Hitbox other) {
+    public boolean isColliding(Hitbox other) {
         return (this.x < other.x + other.hitboxWidth &&
                 this.x + this.hitboxWidth > other.x &&
                 this.y < other.y + other.hitboxHeight &&
@@ -34,5 +34,21 @@ public class Hitbox {
 
     public double getHitboxHeight() {
         return hitboxHeight;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setWidth(double hitboxWidth) {
+        this.hitboxWidth = hitboxWidth;
+    }
+
+    public void setHeight(double hitboxHeight) {
+        this.hitboxHeight = hitboxHeight;
     }
 }
